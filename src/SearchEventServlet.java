@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -79,17 +80,18 @@ public class SearchEventServlet extends HttpServlet {
 				Date date1 = new Date();
 				Date date2 = df.parse(eventDate + " " + eventTime);
 				long differenceInTime = date2.getTime() - date1.getTime();
-				long differenceInMinutes = (differenceInTime / 1000) % 60;
-				long differenceInHours = (differenceInTime / (1000 * 60 * 60)) % 24;
-				long differenceInDays = (differenceInTime / (1000 * 60 * 60 * 24)) % 365;
-				Date current = new Date();
+				long differenceInMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceInTime) % 60;
+				long differenceInHours = TimeUnit.MILLISECONDS.toHours(differenceInTime) % 24;
+				long differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInTime) % 365;
+				long differenceInYears = TimeUnit.MILLISECONDS.toDays(differenceInTime) / 365;
 				String timeUntil;
 				if (key.isEmpty() || eventName.contains(key)) {
 					out.println("ID: " + id + ", ");
 					out.println("Event Name: " + eventName + ", ");
 					out.println("Event Date: " + eventDate + ", ");
 					out.println("Event Time: " + eventTime + ", ");
-					out.println("Time until Event: " + differenceInDays + " Days, " + differenceInHours + " Hours, " + //
+					out.println("Time until Event: " + differenceInYears + " Years, " + differenceInDays + " Days, " //
+							+ differenceInHours + " Hours, " + //
 							differenceInMinutes + " Minutes." + "<br>");
 				}
 			}
