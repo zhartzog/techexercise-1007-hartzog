@@ -32,23 +32,21 @@ footer {
 
 <body>
 <header>
-<h1> Insert Event </h1>
+<h1> Search Data </h1>
 </header>
 
 <nav>
-<a href="/webproject/simpleFormSearch.html">Search Data</a> <br>
+<a href="/techproject/InsertEvent.html">Insert Data</a> <br>
 </nav>
 
 <section>
 	<h1>User Input</h1>
 	
-	<form action="InsertEvent" method="POST">
+	<form action="SearchEventServlet" method="POST">
 	
-		User Name: <input type="text" name="eventName"> <br />
-		Email: <input type="text" name="eventDate"> <br />
-		Phone: <input type="text" name="eventType"> <br />
+		Event Name: <input type="text" name="keyword"> <br />
 		
-		<input type="submit" value="Submit" />
+		<input type="submit" value="Search" />
 	</form>
 
 </section>

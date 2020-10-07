@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +27,17 @@ public class InsertEventServlet extends HttpServlet {
 		String eventName = request.getParameter("eventName");
 		String eventDate = request.getParameter("eventDate");
 		String eventTime = request.getParameter("eventTime");
+		if (eventName == null || eventName == "") {
+			eventName = "Unnamed Event";
+		}
+		if (eventTime == null || eventTime == "") {
+			eventTime = "00:01";
+		}
+		if (eventDate == null || eventDate == "") {
+			Date date = new Date();
+			SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+			eventDate = df.format(date);
+		}
 		Connection connection = null;
 		String insertSql = " INSERT INTO eventTable (id, EVENTNAME, EVENTDATE, EVENTTIME) VALUES (default, ?, ?, ?)";
 
@@ -52,12 +65,12 @@ public class InsertEventServlet extends HttpServlet {
 				"<h2 align=\"center\">" + title + "</h2>\n" + //
 				"<ul>\n" + //
 
-				"  <li><b>User Name</b>: " + eventName + "\n" + //
-				"  <li><b>Email</b>: " + eventDate + "\n" + //
-				"  <li><b>Phone</b>: " + eventTime + "\n" + //
+				"  <li><b>Event Name</b>: " + eventName + "\n" + //
+				"  <li><b>Event Date</b>: " + eventDate + "\n" + //
+				"  <li><b>Event Time</b>: " + eventTime + "\n" + //
 
 				"</ul>\n");
-		out.println("<a href=/webproject/InsertEvent.html>Search Data</a> <br>");
+		out.println("<a href=/techproject/SearchEvent.html>Search Data</a> <br>");
 		out.println("</body></html>");
 	}
 
